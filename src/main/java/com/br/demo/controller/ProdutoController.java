@@ -3,6 +3,8 @@ package com.br.demo.controller;
 import com.br.demo.dto.request.ProdutoRequestDTO;
 import com.br.demo.dto.response.ProdutoResponseDTO;
 import com.br.demo.service.ProdutoService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,12 +31,12 @@ public class ProdutoController {
     }
 
     @PostMapping
-    public ResponseEntity<ProdutoResponseDTO> criarProduto(@RequestBody ProdutoRequestDTO requestDTO){
-        return ResponseEntity.ok(produtoService.criarProduto(requestDTO));
+    public ResponseEntity<ProdutoResponseDTO> criarProduto(@Valid @RequestBody ProdutoRequestDTO requestDTO){
+        return ResponseEntity.status(HttpStatus.CREATED).body(produtoService.criarProduto(requestDTO));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProdutoResponseDTO> atualizarProduto(@PathVariable Long id, @RequestBody ProdutoRequestDTO requestDTO){
+    public ResponseEntity<ProdutoResponseDTO> atualizarProduto(@PathVariable Long id, @Valid @RequestBody ProdutoRequestDTO requestDTO){
         return ResponseEntity.ok(produtoService.atualizarProduto(id, requestDTO));
     }
 
